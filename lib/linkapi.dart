@@ -5,6 +5,9 @@ class AppLink {
   static const String signup = "$server/custom/v1/register";
   static const String login = "$server/jwt-auth/v1/token";
   static const String passwordrecovery = "$server/custom/v1/forgot-password/";
+  static const String adsbycat = "$server/app/v1/adsbycat";
+  static const String catswithsubs =
+      "$server/app/v1/cats-with-sub-and-adscount/";
 }
 
 //

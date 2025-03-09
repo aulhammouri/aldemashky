@@ -9,6 +9,8 @@ import '../../wedgets/custom_input_text_widget.dart';
 import '../../wedgets/custom_btn_widget.dart';
 
 class SignupScrean extends StatelessWidget {
+  const SignupScrean({super.key});
+
   @override
   Widget build(BuildContext context) {
     Get.lazyPut(() => SignupControllerImp());

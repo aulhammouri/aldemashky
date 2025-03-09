@@ -53,17 +53,27 @@ class Crud {
     if (await checkInternet()) {
       var response = await http.get(Uri.parse(linkurl), headers: {
         'Content-Type': 'application/json',
-        'Authorization': token,
+        'Accept': 'application/json',
       });
-      print("========================== $response");
+      print(
+          "======================+++++++++++++++++==== ${response.statusCode}");
       if (response.statusCode == 200 ||
           response.statusCode == 201 ||
-          response.statusCode == 403) {
-        Map responsebody = jsonDecode(response.body);
-        return Right({
-          "statusCode": response.statusCode,
-          "body": responsebody,
-        });
+          response.statusCode == 403 ||
+          response.statusCode == 404) {
+        if (response.headers['content-type']!.contains('application/json')) {
+          Map responsebody = jsonDecode(response.body);
+          return Right({
+            "statusCode": response.statusCode,
+            "body": responsebody,
+          });
+        } else {
+          print("=============================== ${'serverfailure1'}");
+          print("==========================statusCode: ${response.statusCode}");
+          snack("Error".tr, "Server error".tr, Icons.wifi_tethering_error,
+              'danger');
+          return const Left(StatusRequest.serverfailure);
+        }
       } else if (response.statusCode == 404) {
         return const Left(StatusRequest.serverfailure);
       } else {

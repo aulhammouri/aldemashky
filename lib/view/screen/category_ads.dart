@@ -1,18 +1,18 @@
 import 'package:ecommercecourse/controller/hom_page_controller.dart';
+import 'package:ecommercecourse/data/model/category_ads_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../wedgets/discount_banner.dart';
+import '../../controller/category_ads_controller.dart';
+import '../wedgets/categories_list.dart';
+import '../wedgets/catrgory_ads_list.dart';
 import '../wedgets/home_header.dart';
-import '../wedgets/popular_products.dart';
-import '../wedgets/recently_added_products.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class CategoryAds extends StatelessWidget {
+  const CategoryAds({super.key});
 
   @override
   Widget build(BuildContext context) {
-    HomPageControllerImp controller = Get.put(HomPageControllerImp());
+    CategoryAdsControllerImp controller = Get.put(CategoryAdsControllerImp());
 
     return Scaffold(
       body: SafeArea(
@@ -21,10 +21,8 @@ class HomePage extends StatelessWidget {
           child: Column(
             children: [
               HomeHeader(),
-              DiscountBanner(),
-              PopularProducts(),
-              SizedBox(height: 20),
-              RecentlyAddedProducts(),
+              CategoriesList(),
+              CatrgoryAdsList(),
             ],
           ),
         ),
