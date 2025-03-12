@@ -24,9 +24,10 @@ class TestController extends GetxController {
       if (true) {
         //response.total_pages > 0
         data.addAll(response['ads']);
-      } else {
-        statusRequest = StatusRequest.failure;
       }
+      //  else {
+      //   statusRequest = StatusRequest.failure;
+      // }
     }
     update();
   }

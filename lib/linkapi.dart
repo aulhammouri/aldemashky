@@ -8,6 +8,7 @@ class AppLink {
   static const String adsbycat = "$server/app/v1/adsbycat";
   static const String catswithsubs =
       "$server/app/v1/cats-with-sub-and-adscount/";
+  static const String adsfiltered = "$server/app/v1/filtered-ads";
 }
 
 //

@@ -7,7 +7,7 @@ import 'test_view.dart';
 import 'view/screen/auth/login_screen.dart';
 import 'view/screen/auth/password_recover.dart';
 import 'view/screen/auth/signup_screan.dart';
-import 'view/screen/category_ads.dart';
+import 'view/screen/product_grid_page.dart';
 
 List<GetPage<dynamic>>? routes = [
   // GetPage(name: "/", page: () => const Language() , middlewares: [
@@ -17,7 +17,7 @@ List<GetPage<dynamic>>? routes = [
 
   GetPage(
     name: AppRoutes.home,
-    page: () => CategoryAds(),
+    page: () => ProductGridPage(),
     // middlewares: [StagingMiddleware()]
   ),
   GetPage(name: AppRoutes.homepage, page: () => HomePage()),

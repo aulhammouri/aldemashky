@@ -3,13 +3,22 @@ import 'package:ecommercecourse/core/localization/translations.dart';
 import 'package:ecommercecourse/core/services/services.dart';
 import 'package:ecommercecourse/routes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'bindings/intialbindings.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initialServices();
-  runApp(const MyApp());
+  //view date in arabic
+  //timeago.format( DateFormat("yyyy-MM-dd HH:mm:ss") .parse(ads['published_date']),locale: 'ar'),
+  timeago.setLocaleMessages('ar', timeago.ArMessages());
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp, // السماح بالوضع العمودي فقط
+  ]).then((_) {
+    runApp(MyApp());
+  });
 }
 
 class MyApp extends StatelessWidget {

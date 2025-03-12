@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../data/datasource/static/product_data.dart';
-import 'product_card_row.dart';
 import 'section_title.dart';
 
 class PopularProducts extends StatelessWidget {
@@ -31,10 +30,10 @@ class PopularProducts extends StatelessWidget {
               childAspectRatio: 3,
             ),
             itemBuilder: (context, index) {
-              return ProductCardRow(
-                product: demoProducts[index],
-                onPress: () {},
-              );
+              // return ProductCardRow(
+              //   product:,
+              //   onPress: () {},
+              // );
             },
           ),
         ),

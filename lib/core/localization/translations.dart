@@ -4,7 +4,6 @@ class MyTranslations extends Translations {
   @override
   Map<String, Map<String, String>> get keys => {
         'en': {
-          'app title': 'Aldemashky',
           'main': 'main',
           'continue': 'continue',
           "#1": "log in  ----------------------------------------------------",
@@ -44,10 +43,11 @@ class MyTranslations extends Translations {
           "not valid phone": "not valid phone",
           "can't be Empty": "can't be Empty",
           "can't be less than: ": "can't be less than: ",
-          "can't be larger than: ": "can't be larger than: "
+          "can't be larger than: ": "can't be larger than: ",
+          "#5": "categories ads -------------------------------------------",
+          'app title': 'Aldemashky',
         },
         'ar': {
-          'app title': 'الدمشقي',
           'main': 'الرئيسية',
           'continue': 'التالي',
           'Welcome back!': 'أهلا بعودتك!',
@@ -86,7 +86,9 @@ class MyTranslations extends Translations {
           "not valid phone": "رقم الهاتف غير صالخ",
           "can't be Empty": "القيمة لا يمكن ان تكون فارغة",
           "can't be less than: ": "القيمة لا يمكن ان تكون أقل من:",
-          "can't be larger than: ": "القيمة لا يمكن ان تكون أكبر من:"
+          "can't be larger than: ": "القيمة لا يمكن ان تكون أكبر من:",
+          "#5": "categories ads -------------------------------------------",
+          'app title': 'الدمشقي',
         }
       };
 }

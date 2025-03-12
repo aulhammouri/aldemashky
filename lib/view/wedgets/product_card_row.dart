@@ -1,110 +1,152 @@
-import 'package:ecommercecourse/data/model/product.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+
+import '../../controller/product_grid_controller.dart';
 
 class ProductCardRow extends StatelessWidget {
   const ProductCardRow({
     Key? key,
     this.width = 140,
     this.aspectRetio = 1.02,
-    required this.product,
+    required this.ads,
     required this.onPress,
   }) : super(key: key);
 
   final double width, aspectRetio;
-  final Product product;
+  final Map ads;
   final VoidCallback onPress;
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 140,
-      child: GestureDetector(
-        onTap: onPress,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              flex: 2,
-              child: AspectRatio(
-                aspectRatio: 1.02,
-                child: Container(
-                  padding: const EdgeInsets.all(4),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF979797).withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: Image.network(
-                      product.images[0],
-                      fit: BoxFit.cover,
-                      width: double.infinity,
-                      height: double.infinity,
+    return GetBuilder<ProductGridControllerImp>(
+      builder: (controller) => Container(
+        child: SizedBox(
+          height: 150,
+          child: GestureDetector(
+            onTap: onPress,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: AspectRatio(
+                    aspectRatio: 1.02,
+                    child: Container(
+                      padding: const EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF979797).withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: Image.network(
+                          ads["image"] == null || ads["image"] == false
+                              ? "https://aldemashqy.com/wp-content/uploads/2021/09/no_image.png"
+                              : ads["image"],
+                          fit: BoxFit.cover,
+                          width: double.infinity,
+                          height: double.infinity,
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ),
-            const SizedBox(width: 4),
-            Expanded(
-              flex: 4,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    product.title,
-                    style: Theme.of(context).textTheme.bodyMedium,
-                    maxLines: 3,
-                  ),
-                  Row(
-                    //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                const SizedBox(width: 6),
+                Expanded(
+                  flex: 5,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "\$${product.price}",
-                        style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          color: Color(0xFFFF7643),
-                        ),
+                        ads['title'] ?? "No title",
+                        style: Theme.of(context).textTheme.bodyMedium,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                      InkWell(
-                        borderRadius: BorderRadius.circular(50),
-                        onTap: () {},
-                        child: Container(
-                          padding: const EdgeInsets.all(6),
-                          height: 24,
-                          width: 24,
-                          decoration: BoxDecoration(
-                            color: product.isFavourite
-                                ? const Color(0xFFFF7643).withOpacity(0.15)
-                                : const Color(0xFF979797).withOpacity(0.1),
-                            shape: BoxShape.circle,
+                      const SizedBox(height: 4),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Icon(Icons.location_on,
+                                  size: 14, color: Colors.grey),
+                              const SizedBox(width: 4),
+                              Text(
+                                ads['location'] ?? "Unknown location",
+                                style: const TextStyle(
+                                    fontSize: 12, color: Colors.grey),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
                           ),
-                          child: SvgPicture.string(
-                            heartIcon,
-                            colorFilter: ColorFilter.mode(
-                                product.isFavourite
-                                    ? const Color(0xFFFF4848)
-                                    : const Color(0xFFDBDEE4),
-                                BlendMode.srcIn),
-                          ),
-                        ),
+                          if (ads['condition'] != null &&
+                              ads['condition'] != "")
+                            Text(
+                              "(${ads['condition']})",
+                              style: const TextStyle(
+                                  fontSize: 12, color: Colors.grey),
+                            ),
+                        ],
                       ),
+                      const SizedBox(height: 4),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Icon(Icons.visibility,
+                                  size: 14, color: Colors.grey),
+                              const SizedBox(width: 4),
+                              Text("${ads['views'] ?? 0} views",
+                                  style: const TextStyle(
+                                      fontSize: 12, color: Colors.grey)),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Icon(Icons.comment, size: 14, color: Colors.grey),
+                              const SizedBox(width: 4),
+                              Text("${ads['comment_count'] ?? 0} comments",
+                                  style: const TextStyle(
+                                      fontSize: 12, color: Colors.grey)),
+                            ],
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 6),
+                      if ((ads['currency'] != null && ads['currency'] != "") &&
+                          (ads['price'] != null && ads['price'] != ""))
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "${ads['currency']} ${ads['price']}",
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xFFFF7643),
+                              ),
+                            ),
+                            Text(
+                              ads['published_date'] ?? "Unknown date",
+                              style: const TextStyle(
+                                  fontSize: 12, color: Colors.grey),
+                            ),
+                          ],
+                        )
+                      else
+                        Row(
+                          children: [Text("no price")],
+                        )
                     ],
-                  )
-                ],
-              ),
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
   }
 }
-
-const heartIcon =
-    '''<svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M16.5266 8.61383L9.27142 15.8877C9.12207 16.0374 8.87889 16.0374 8.72858 15.8877L1.47343 8.61383C0.523696 7.66069 0 6.39366 0 5.04505C0 3.69644 0.523696 2.42942 1.47343 1.47627C2.45572 0.492411 3.74438 0 5.03399 0C6.3236 0 7.61225 0.492411 8.59454 1.47627C8.81857 1.70088 9.18143 1.70088 9.40641 1.47627C11.3691 -0.491451 14.5629 -0.491451 16.5266 1.47627C17.4763 2.42846 18 3.69548 18 5.04505C18 6.39366 17.4763 7.66165 16.5266 8.61383Z" fill="#DBDEE4"/>
-</svg>
-''';

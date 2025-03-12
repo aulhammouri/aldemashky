@@ -1,10 +1,11 @@
-import 'package:ecommercecourse/controller/category_ads_controller.dart';
 import 'package:ecommercecourse/core/constant/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../controller/product_grid_controller.dart';
 import '../../data/model/category_ads_model.dart';
 
+// ignore: must_be_immutable
 class CategoriesList extends StatelessWidget {
   //final List categories;
   late CategoryAdsModel cats;
@@ -13,7 +14,7 @@ class CategoriesList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<CategoryAdsControllerImp>(
+    return GetBuilder<ProductGridControllerImp>(
       builder: (controller) => Column(
         children: [
           SizedBox(height: 12),
@@ -39,15 +40,18 @@ class CategoriesList extends StatelessWidget {
                                 : null, // إضافة الحد السفلي فقط إذا تحقق الشرط
                           ),
                           child: Text(
-                            cats.name.toString(),
+                            controller.categories[index]['name'],
                             style: const TextStyle(
                                 fontSize: 14, fontWeight: FontWeight.bold),
                           ),
                         ),
                         onTap: () {
                           controller.selected_cat = index;
-                          controller.selected_sub_cat = 0;
+                          controller.selected_sub_cat = -1;
                           controller.getSubCategories(index);
+                          controller.ads = [];
+                          controller.getAds(
+                              controller.categories[index]['id'], 1);
                         },
                       ),
                     ],
@@ -57,7 +61,9 @@ class CategoriesList extends StatelessWidget {
             ),
           ),
           SizedBox(
-              height: 40, // ارتفاع القائمة
+              height: controller.haveSubCategories == true
+                  ? 40
+                  : 0, // ارتفاع القائمة
               child: controller.haveSubCategories == true
                   ? ListView.builder(
                       scrollDirection: Axis.horizontal, // تحديد الاتجاه الأفقي
@@ -81,7 +87,7 @@ class CategoriesList extends StatelessWidget {
                                         : null, // إضافة الحد السفلي فقط إذا تحقق الشرط
                                   ),
                                   child: Text(
-                                    cats.name.toString(),
+                                    controller.subCategories[index]['name'],
                                     style: const TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.bold,
@@ -90,9 +96,9 @@ class CategoriesList extends StatelessWidget {
                                 ),
                                 onTap: () {
                                   controller.selected_sub_cat = index;
-                                  controller.getAds(index);
-                                  //controller.getAds(index);
-                                  //controller.getSubCategories(index);
+                                  controller.ads = [];
+                                  controller.getAds(
+                                      controller.subCategories[index]['id'], 1);
                                 },
                               ),
                             ],
@@ -100,7 +106,7 @@ class CategoriesList extends StatelessWidget {
                         );
                       },
                     )
-                  : Text("no sub categories")),
+                  : null),
         ],
       ),
     );
