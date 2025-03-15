@@ -18,4 +18,11 @@ class ColorApp {
   static const Color snBgErColor = Colors.red;
   static const Color snBgSuColor = Colors.green;
   static const Color snBgInColor = Colors.grey;
+
+  //product
+  static const Color p_primary = Color(0xFF242476);
+  static const Color p_primarySoft = Color(0xFFEAEAF2);
+  static const Color p_secondary = Color(0xFF0A0E2F);
+  static const Color p_accent = Color(0xFFFABA3E);
+  static const Color p_border = Color(0xFFD3D3E4);
 }

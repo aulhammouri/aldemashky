@@ -1,3 +1,5 @@
+import 'package:ecommercecourse/core/constant/approutes.dart';
+import 'package:ecommercecourse/view/screen/product_detail.dart';
 import 'package:ecommercecourse/view/wedgets/product_card_column.dart';
 import 'package:ecommercecourse/view/wedgets/product_card_row.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +39,10 @@ class ProductGrid extends StatelessWidget {
         itemBuilder: (context, index) {
           return ProductCardColumn(
             ads: controller.ads[index],
-            onPress: () {},
+            onPress: () {
+              Get.toNamed(AppRoutes.productdetail,
+                  arguments: controller.ads[index]['ID']);
+            },
           );
         },
       ),

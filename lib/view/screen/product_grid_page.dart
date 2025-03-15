@@ -29,7 +29,6 @@ class ProductGridPage extends StatelessWidget {
             child: GetBuilder<ProductGridControllerImp>(
               builder: (controller) {
                 return Container(
-                    //child: ProductGrid());
                     child: HandlingDataView(
                   statusRequest: controller.statusRequest,
                   widget: ProductGrid(),
