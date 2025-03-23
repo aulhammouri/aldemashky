@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 import 'package:video_player/video_player.dart';
 
 import '../core/class/statusrequest.dart';
@@ -8,18 +9,21 @@ import '../core/functions/snack.dart';
 import '../core/class/request_data.dart';
 import '../core/services/services.dart';
 import '../linkapi.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 abstract class ProductDetailController extends GetxController {
-  getProduct(productId);
-  getMoreComments(productId, page);
-  callAuther(productId);
-  whatsappAuthor(productId);
+  getProduct();
+  getMoreComments();
+  callAuther(phoneNumber);
+  whatsappAuthor(whatsAppNumber, message);
   initVedio();
   playPause();
 }
 
 class ProductDetailControllerImp extends ProductDetailController {
-  MyServices myServices = Get.find();
+  // MyServices myServices = Get.find();
+  //int? userId;
+
   late String? user_email;
   bool? isLogedIn;
   bool? haveSubCategories;
@@ -37,13 +41,18 @@ class ProductDetailControllerImp extends ProductDetailController {
   late StatusRequest statusRequest = StatusRequest.none;
   RequestData data = RequestData(Get.find());
 
+//video view
   bool haveVideo = false;
-
   late VideoPlayerController vVcontroller;
+
+//review popup
+  String comment = '';
+  int rating = 0;
 
   @override
   void onInit() async {
-    await getProduct(productId); //1582 1603
+    //userId = int.parse(myServices.sharedPreferences.getString("user_id"));
+    await getProduct(); //1582 1603
     await initVedio();
     update();
 
@@ -51,11 +60,11 @@ class ProductDetailControllerImp extends ProductDetailController {
   }
 
   @override
-  getProduct(productId) async {
+  getProduct() async {
     statusRequest = StatusRequest.loading;
     update();
     var response = await data.requestData(
-        "${AppLink.getproduct}/$productId", {}, '', 'GET');
+        "${AppLink.getproduct}/$productId?foo=foo", {}, '', 'GET');
     statusRequest = handlingData(response);
     if (StatusRequest.success == statusRequest) {
       if (response['statusCode'] == 200) {
@@ -65,8 +74,7 @@ class ProductDetailControllerImp extends ProductDetailController {
         product = response['body']['data'];
         commentsCount = int.parse(response['body']['data']['comments_count']);
         attachmentsCount = (response['body']['data']['attachments']).length;
-
-        //statusRequest = StatusRequest.success;
+        print("************************** ${product['video_url']}");
       } else {
         statusRequest = StatusRequest.failure;
       }
@@ -76,26 +84,53 @@ class ProductDetailControllerImp extends ProductDetailController {
   @override
   void dispose() {
     vVcontroller.dispose();
-
     super.dispose();
   }
 
   @override
-  callAuther(productId) {
-    // TODO: implement callAuther
-    throw UnimplementedError();
+  getMoreComments() async {
+    if (commentsCount < commentsCurrentPage * 5) {
+      snack("sorry".tr, "No more comments".tr, Icons.info, 'info');
+      return;
+    }
+    commentsCurrentPage = commentsCurrentPage + 1;
+    update();
+    var response = await data.requestData(
+        "${AppLink.getmorecomment}?id=$productId&page=$commentsCurrentPage&per_page=5",
+        {},
+        '',
+        'GET');
+    if (StatusRequest.success == statusRequest) {
+      if (response['statusCode'] == 200) {
+        comments.addAll(response['body']['comments']);
+        print(comments);
+        update();
+      }
+    }
   }
 
   @override
-  getMoreComments(productId, page) {
-    // TODO: implement getMoreComments
-    throw UnimplementedError();
+  Future<void> callAuther(phone) async {
+    final url = "tel:$phone";
+    try {
+      if (true) {
+        await launchUrlString(url, mode: LaunchMode.externalApplication);
+      }
+    } catch (e) {
+      SnackBar(content: Text('Problem while open phone'.tr));
+    }
   }
 
   @override
-  whatsappAuthor(productId) {
-    // TODO: implement whatsappAuthor
-    throw UnimplementedError();
+  Future<void> whatsappAuthor(phone, message) async {
+    final url = 'https://wa.me/$phone?text=$message';
+    try {
+      if (true) {
+        await launchUrlString(url, mode: LaunchMode.externalApplication);
+      }
+    } catch (e) {
+      SnackBar(content: Text('Proplem while open whatsapp'.tr));
+    }
   }
 
   @override

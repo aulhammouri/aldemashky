@@ -49,7 +49,7 @@ class LoginControllerImp extends LoginController {
               "user_display_name", response['body']['user_display_name']);
           //myService.sharedPreferences.setStringList("roles", response['body']['roles']);
           myService.sharedPreferences
-              .setString("store_id", response['body']['store_id'].toString());
+              .setString("user_id", response['body']['store_id'].toString());
           myService.sharedPreferences.setBool("isLogedIn", true);
           Get.offNamed(AppRoutes.homepage);
         } else if (response['statusCode'] == 403) {

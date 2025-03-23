@@ -21,9 +21,16 @@ class ProductGridControllerImp extends ProductGridController {
   bool? isLogedIn;
   bool? haveSubCategories;
 
-  List categories = [];
+  List categories = [
+    {
+      "id": 0,
+      "name": "all".tr,
+      "ads_count": 0,
+      "children": [],
+    },
+  ];
   List subCategories = [];
-  int selected_cat = -1;
+  int selected_cat = 0;
   int selected_sub_cat = -1;
   List ads = [];
   late int adsCurrentPage = 1;
@@ -112,7 +119,7 @@ class ProductGridControllerImp extends ProductGridController {
     statusRequest = handlingData(response);
     if (StatusRequest.success == statusRequest) {
       if (response['statusCode'] == 200) {
-        categories.addAll(response['body']['data']);
+        categories.addAll(response['body']['ad_cats']);
       } else {
         snack("error".tr, "Server error".tr, Icons.error, 'info');
       }

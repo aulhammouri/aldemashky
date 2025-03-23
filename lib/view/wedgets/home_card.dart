@@ -7,8 +7,8 @@ import 'package:timeago/timeago.dart' as timeago;
 
 import '../../core/constant/colors.dart';
 
-class ProductCardColumn extends StatelessWidget {
-  const ProductCardColumn({
+class HomeCard extends StatelessWidget {
+  const HomeCard({
     Key? key,
     required this.ads,
     required this.onPress,
@@ -25,13 +25,15 @@ class ProductCardColumn extends StatelessWidget {
       builder: (controller) => GestureDetector(
         onTap: onPress,
         child: Container(
+          height: 300,
+          width: 170,
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(12),
             boxShadow: [
               BoxShadow(
-                color: Colors.grey.withOpacity(0.1),
+                color: Colors.grey.shade100,
                 spreadRadius: 1,
                 blurRadius: 5,
               ),

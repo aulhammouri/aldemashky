@@ -17,6 +17,11 @@ validInput(String val, int min, int max, String type) {
       return "not valid phone".tr;
     }
   }
+  if (type == "price") {
+    if (!GetUtils.isNum(val)) {
+      return "not valid price".tr;
+    }
+  }
 
   if (val.isEmpty) {
     return "can't be Empty".tr;

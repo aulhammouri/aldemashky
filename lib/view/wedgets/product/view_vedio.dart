@@ -24,6 +24,7 @@ class ViewVedio extends StatelessWidget {
             bottom: 5, // المسافة من الأسفل
             right: 25, // المسافة من اليمين
             child: FloatingActionButton.small(
+              backgroundColor: Colors.grey,
               onPressed: () {
                 controller.playPause();
               },

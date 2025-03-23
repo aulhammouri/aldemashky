@@ -19,30 +19,37 @@ class CategoriesList extends StatelessWidget {
         children: [
           SizedBox(height: 12),
           SizedBox(
-            height: 40, // ارتفاع القائمة
+            height: 60, // ارتفاع القائمة
             child: ListView.builder(
               scrollDirection: Axis.horizontal, // تحديد الاتجاه الأفقي
               itemCount: controller.categories.length,
               padding: const EdgeInsets.symmetric(horizontal: 20),
               itemBuilder: (context, index) {
                 cats = CategoryAdsModel.fromJson(controller.categories[index]);
+                final isSelected = controller.selected_cat == index;
+
                 return Padding(
-                  padding: const EdgeInsets.all(8),
+                  padding: const EdgeInsets.all(4),
                   child: Column(
                     children: [
                       InkWell(
-                        child: Container(
+                        child: AnimatedContainer(
+                          duration: const Duration(milliseconds: 300),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8, vertical: 8),
                           decoration: BoxDecoration(
-                            border: controller.selected_cat == index
-                                ? Border(
-                                    bottom: BorderSide(
-                                        color: ColorApp.primary, width: 2))
-                                : null, // إضافة الحد السفلي فقط إذا تحقق الشرط
+                            color: isSelected
+                                ? ColorApp.primary
+                                : Colors.grey[200],
+                            borderRadius: BorderRadius.circular(8),
                           ),
                           child: Text(
                             controller.categories[index]['name'],
-                            style: const TextStyle(
-                                fontSize: 14, fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: isSelected ? Colors.white : Colors.black87,
+                            ),
                           ),
                         ),
                         onTap: () {
@@ -66,42 +73,44 @@ class CategoriesList extends StatelessWidget {
                   : 0, // ارتفاع القائمة
               child: controller.haveSubCategories == true
                   ? ListView.builder(
-                      scrollDirection: Axis.horizontal, // تحديد الاتجاه الأفقي
+                      scrollDirection: Axis.horizontal,
                       itemCount: controller.subCategories.length,
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
                       itemBuilder: (context, index) {
-                        cats = CategoryAdsModel.fromJson(
-                            controller.subCategories[index]);
+                        final subCategory = controller.subCategories[index];
+                        final isSelected = controller.selected_sub_cat == index;
+
                         return Padding(
-                          padding: const EdgeInsets.all(8),
-                          child: Column(
-                            children: [
-                              InkWell(
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    border: controller.selected_sub_cat == index
-                                        ? Border(
-                                            bottom: BorderSide(
-                                                color: ColorApp.primary,
-                                                width: 2))
-                                        : null, // إضافة الحد السفلي فقط إذا تحقق الشرط
-                                  ),
-                                  child: Text(
-                                    controller.subCategories[index]['name'],
-                                    style: const TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                          padding: const EdgeInsets.symmetric(horizontal: 4),
+                          child: GestureDetector(
+                            onTap: () {
+                              controller.selected_sub_cat = index;
+                              controller.ads = [];
+                              controller.getAds(subCategory['id'], 1);
+                            },
+                            child: AnimatedContainer(
+                              duration: const Duration(milliseconds: 300),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 8, vertical: 10),
+                              decoration: BoxDecoration(
+                                color: isSelected
+                                    ? ColorApp.primary
+                                    : Colors.grey[200],
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  subCategory['name'],
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                    color: isSelected
+                                        ? Colors.white
+                                        : Colors.black87,
                                   ),
                                 ),
-                                onTap: () {
-                                  controller.selected_sub_cat = index;
-                                  controller.ads = [];
-                                  controller.getAds(
-                                      controller.subCategories[index]['id'], 1);
-                                },
                               ),
-                            ],
+                            ),
                           ),
                         );
                       },
