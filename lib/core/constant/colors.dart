@@ -5,7 +5,8 @@ class ColorApp {
   static const Color primarylight = Color.fromARGB(255, 167, 238, 169);
 
   static const Color grey = Color.fromARGB(255, 92, 91, 91);
-  static const Color headLine1Color = Colors.black;
+  static const Color headLine1Color = Color.fromARGB(255, 4, 58, 6);
+  static const Color bodyTextColor = Color.fromRGBO(60, 80, 60, 1);
 
   //button
   static const Color btnBgColor = Colors.green;

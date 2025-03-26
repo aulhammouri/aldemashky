@@ -4,6 +4,7 @@ import 'package:ecommercecourse/view/wedgets/product_list.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../view/screen/product_grid_page.dart';
+import '../view/screen/products_manging.dart';
 
 abstract class HomPageController extends GetxController {
   changePage(int i);
@@ -27,18 +28,17 @@ class HomPageControllerImp extends HomPageController {
     super.onInit();
   }
 
-  List titlebottomappbar = ["home", "categories", "profile", "settings"];
+  List titlebottomappbar = [
+    "home".tr,
+    "categories".tr,
+    "profile".tr,
+    "about".tr
+  ];
   List<Widget> listPage = [
     Home(),
     ProductGridPage(),
-    Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [Center(child: Text("Profile"))],
-    ),
-    Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [Center(child: Text("Favorite"))],
-    )
+    ProductsManging(),
+    ProductsManging(),
   ];
   @override
   changePage(int i) {

@@ -17,6 +17,7 @@ class AppLink {
   static const String addproduct = "$server/adforest/v1/add-ad/";
   static const String editproduct = "$server/adforest/v1/edit-ad/";
   static const String addfile = "$server/custom/v1/upload-image";
+  static const String userads = "$server/custom/v1/user-ads";
 }
 
 //

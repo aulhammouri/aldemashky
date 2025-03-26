@@ -1,6 +1,7 @@
 import 'package:ecommercecourse/view/screen/edit_product.dart';
 import 'package:ecommercecourse/view/screen/home_page.dart';
 import 'package:ecommercecourse/view/screen/product_detail.dart';
+import 'package:ecommercecourse/view/screen/products_manging.dart';
 import 'package:get/get.dart';
 import 'core/constant/approutes.dart';
 
@@ -34,4 +35,5 @@ List<GetPage<dynamic>>? routes = [
   GetPage(name: AppRoutes.productdetail, page: () => ProductDetail()),
   GetPage(name: AppRoutes.addproduct, page: () => AddProduct()),
   GetPage(name: AppRoutes.editproduct, page: () => EditProduct()),
+  GetPage(name: AppRoutes.managProducts, page: () => ProductsManging()),
 ];

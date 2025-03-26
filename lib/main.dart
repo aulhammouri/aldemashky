@@ -39,12 +39,17 @@ class MyApp extends StatelessWidget {
               fontWeight: FontWeight.bold,
               fontSize: 20,
               color: ColorApp.headLine1Color),
-          bodySmall: TextStyle(
-              fontSize: 12, color: const Color.fromRGBO(70, 69, 69, 1)),
-          bodyMedium: TextStyle(
-              fontSize: 14, color: const Color.fromRGBO(70, 69, 69, 1)),
-          bodyLarge: TextStyle(
-              fontSize: 16, color: const Color.fromRGBO(70, 69, 69, 1)),
+          headlineMedium: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+              color: ColorApp.headLine1Color),
+          headlineSmall: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w400,
+              color: ColorApp.headLine1Color),
+          bodySmall: TextStyle(fontSize: 12, color: ColorApp.bodyTextColor),
+          bodyMedium: TextStyle(fontSize: 14, color: ColorApp.bodyTextColor),
+          bodyLarge: TextStyle(fontSize: 16, color: ColorApp.bodyTextColor),
         ),
       ),
       //home: LoginScreen(), //OnBoarding()

@@ -121,6 +121,11 @@ flutter:
     - assets/lottie/
     - assets/images/
     - assets/icons/
+    - assets/images/carousel/banner-5-1.jpg
+    - assets/images/carousel/1.jpg
+    - assets/images/carousel/2.jpg
+    - assets/images/carousel/3.jpg
+
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

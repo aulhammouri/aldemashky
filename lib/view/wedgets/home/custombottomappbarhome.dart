@@ -27,7 +27,7 @@ class CustomBottomAppBarHome extends StatelessWidget {
                                   ? Icons.category
                                   : i == 2
                                       ? Icons.person
-                                      : Icons.settings,
+                                      : Icons.apartment_outlined,
                           onPressed: () {
                             controller.changePage(i);
                           },

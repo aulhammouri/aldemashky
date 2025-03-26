@@ -10,6 +10,10 @@ class ImageAssets {
       '$rootImages/onboarding/Illustration-2.png';
   static const String onBoardingImage3 =
       '$rootImages/onboarding/Illustration-3.png';
+  static const String carousel0 = '$rootImages/carousel/banner-5-1.jpg';
+  static const String carousel1 = '$rootImages/carousel/1.jpg';
+  static const String carousel2 = '$rootImages/carousel/2.jpg';
+  static const String carousel3 = '$rootImages/carousel/3.jpg';
 
   static const String person = '$rootImages/person.png';
 
