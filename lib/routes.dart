@@ -1,3 +1,4 @@
+import 'package:ecommercecourse/view/screen/aboutus.dart';
 import 'package:ecommercecourse/view/screen/edit_product.dart';
 import 'package:ecommercecourse/view/screen/home_page.dart';
 import 'package:ecommercecourse/view/screen/product_detail.dart';
@@ -26,6 +27,8 @@ List<GetPage<dynamic>>? routes = [
       page: () => LoginScreen(),
       middlewares: [StagingMiddleware()]),
   GetPage(name: AppRoutes.homepage, page: () => HomePage()),
+  GetPage(name: AppRoutes.aboutus, page: () => AboutUs()),
+
   GetPage(name: AppRoutes.login, page: () => LoginScreen()),
   GetPage(name: AppRoutes.loginsmall, page: () => LoginScreenSmall()),
 

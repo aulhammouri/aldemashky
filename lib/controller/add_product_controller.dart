@@ -81,31 +81,6 @@ class AddProductControllerImp extends AddProductController {
         snack("Error".tr, "You have to upload image".tr, Icons.error, "danger");
         return;
       }
-      print({
-        "user_id": myservice.sharedPreferences.getString('user_id'),
-        "category": selectedSubCategory != null
-            ? selectedSubCategory!['id']
-            : selectedMainCategory!['id'],
-        "poster_contact": poster_contact.text,
-        "poster_name":
-            myservice.sharedPreferences.getString('user_display_name'),
-        "title": title.text,
-        "description": description.text,
-        "price_type": priceType?['db'],
-        "price": price.text,
-        "currency": currency,
-        "bidding_date": bidding_date.text,
-        "bidding": priceType?['db'] == "auction" ? "1" : "0",
-        "location": location.text,
-        'countryId': selectedMainCountry?['id'],
-        'subcountryId': selectedSubCountry?['id'],
-        "map_long": "",
-        "map_lat": "",
-        "warranty": warranty,
-        "condition": condition,
-        "type": type,
-        "tags": tags
-      }.toString());
       statusRequest = StatusRequest.loading;
       update();
       var response = await data.requestMultipartData(
@@ -142,7 +117,7 @@ class AddProductControllerImp extends AddProductController {
       if (StatusRequest.success == statusRequest) {
         if (response['statusCode'] == 200) {
           snack("Done".tr, response['body']['message'], Icons.check, 'success');
-          Get.offNamed(AppRoutes.homepage,
+          Get.offNamed(AppRoutes.productdetail,
               arguments: response['body']['post_id']);
         } else if (response['statusCode'] == 403) {
           snack("Inputs error".tr, response['body']['message'], Icons.error,
@@ -172,7 +147,7 @@ class AddProductControllerImp extends AddProductController {
     throw UnimplementedError();
   }
 
-  final List<dynamic> categories = [];
+  List<dynamic> categories = [];
 
   Map<String, dynamic>? selectedMainCategory;
   Map<String, dynamic>? selectedSubCategory;
@@ -211,7 +186,7 @@ class AddProductControllerImp extends AddProductController {
   }
 
   final List<dynamic> warrantyListMap = [];
-  final List<String> warrantyList = [];
+  List<String> warrantyList = [];
   String? warranty;
   @override
   void updateWarranty(String value) {

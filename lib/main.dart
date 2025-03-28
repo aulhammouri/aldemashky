@@ -11,6 +11,7 @@ import 'package:timeago/timeago.dart' as timeago;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initialServices();
+
   //view date in arabic
   //timeago.format( DateFormat("yyyy-MM-dd HH:mm:ss") .parse(ads['published_date']),locale: 'ar'),
   timeago.setLocaleMessages('ar', timeago.ArMessages());

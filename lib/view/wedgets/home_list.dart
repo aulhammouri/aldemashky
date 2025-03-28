@@ -7,8 +7,9 @@ import 'package:timeago/timeago.dart' as timeago;
 import '../../core/constant/colors.dart';
 
 class HomeList extends StatelessWidget {
-  HomeList({super.key, required this.adsList});
+  HomeList({super.key, required this.adsList, required this.type});
   final List adsList;
+  final String type;
   Map ads = {};
 
   @override
@@ -86,17 +87,19 @@ class HomeList extends StatelessWidget {
                         const SizedBox(height: 4),
                         Row(
                           children: [
-                            if ((ads['currency'] != null &&
-                                    ads['currency'] != "") &&
-                                (ads['price'] != null && ads['price'] != ""))
-                              Text(
-                                "${ads['currency']} ${ads['price']}",
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: ColorApp.btnBgColor,
-                                ),
+                            Text(
+                              ((ads['currency'] != null &&
+                                          ads['currency'] != "") &&
+                                      (ads['price'] != null &&
+                                          ads['price'] != ""))
+                                  ? "${ads['currency']} ${ads['price']}"
+                                  : "No price".tr,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: ColorApp.btnBgColor,
                               ),
+                            ),
                           ],
                         ),
                         const SizedBox(height: 4),
@@ -113,28 +116,32 @@ class HomeList extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Row(
-                              children: [
-                                Icon(Icons.visibility,
-                                    size: 14, color: Colors.grey),
-                                const SizedBox(width: 4),
-                                Text("${ads['views'] ?? 0} ${"views".tr}",
-                                    style: const TextStyle(
-                                        fontSize: 12, color: Colors.grey)),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                  timeago.format(
-                                      DateFormat("yyyy-MM-dd HH:mm:ss")
-                                          .parse(ads['publish_date']),
-                                      locale: 'ar'),
-                                  style: const TextStyle(
-                                      fontSize: 12, color: Colors.grey),
-                                ),
-                              ],
-                            ),
+                            type == 'mostviewed'
+                                ? Row(
+                                    children: [
+                                      Icon(Icons.visibility,
+                                          size: 14, color: Colors.grey),
+                                      const SizedBox(width: 4),
+                                      Text("${ads['views'] ?? 0} ${"views".tr}",
+                                          style: const TextStyle(
+                                              fontSize: 12,
+                                              color: Colors.grey)),
+                                    ],
+                                  )
+                                : Row(
+                                    children: [
+                                      Icon(Icons.date_range,
+                                          size: 14, color: Colors.grey),
+                                      Text(
+                                        timeago.format(
+                                            DateFormat("yyyy-MM-dd HH:mm:ss")
+                                                .parse(ads['publish_date']),
+                                            locale: 'ar'),
+                                        style: const TextStyle(
+                                            fontSize: 12, color: Colors.grey),
+                                      ),
+                                    ],
+                                  )
                           ],
                         ),
                       ],

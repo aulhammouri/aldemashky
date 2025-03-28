@@ -113,16 +113,25 @@ class ProductCardColumn extends StatelessWidget {
               const SizedBox(height: 6),
               Row(
                 children: [
-                  if ((ads['currency'] != null && ads['currency'] != "") &&
-                      (ads['price'] != null && ads['price'] != ""))
-                    Text(
-                      "${ads['currency']} ${ads['price']}",
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: ColorApp.btnBgColor,
-                      ),
+                  Text(
+                    ((ads['currency'] != null && ads['currency'] != "") &&
+                            (ads['price'] != null && ads['price'] != ""))
+                        ? "${ads['currency']} ${ads['price']}"
+                        : ads['price_type'] == 'on_call'
+                            ? "On Call".tr
+                            : ads['price_type'] == 'Negotiable'
+                                ? "Negotiable".tr
+                                : ads['price_type'] == 'Fixed'
+                                    ? "Fixed".tr
+                                    : ads['price_type'] == 'auction'
+                                        ? "Auction".tr
+                                        : "Free".tr,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: ColorApp.btnBgColor,
                     ),
+                  ),
                   const SizedBox(width: 8),
                   if (ads['condition'] != null && ads['condition'] != "")
                     Text(
@@ -147,7 +156,8 @@ class ProductCardColumn extends StatelessWidget {
                     children: [
                       Icon(Icons.visibility, size: 14, color: Colors.grey),
                       const SizedBox(width: 4),
-                      Text("${ads['views'] ?? 0} ${"views".tr}",
+                      Text(
+                          "${ads['views'] == '' ? 0 : ads['views']} ${"views".tr}",
                           style: const TextStyle(
                               fontSize: 12, color: Colors.grey)),
                     ],

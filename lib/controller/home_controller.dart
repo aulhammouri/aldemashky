@@ -2,14 +2,12 @@ import 'dart:async';
 
 import 'package:ecommercecourse/core/services/services.dart';
 import 'package:ecommercecourse/linkapi.dart';
-import 'package:ecommercecourse/view/wedgets/product_list.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../core/class/request_data.dart';
 import '../core/class/statusrequest.dart';
 import '../core/constant/imageassets.dart';
 import '../core/functions/handingdatacontroller.dart';
-import '../view/screen/product_grid_page.dart';
 
 abstract class HomeController extends GetxController {
   getAdsLists();
@@ -25,11 +23,20 @@ class HomeControllerImp extends HomeController {
   List mostViewedAds = [];
   List cheapestAds = [];
   List featuredAds = [];
+  List categories = [
+    {"id": 466, 'cat': 'cars'.tr, 'image': ImageAssets.cars},
+    {"id": 508, 'cat': 'delevery'.tr, 'image': ImageAssets.delevery},
+    {"id": 468, 'cat': 'medical'.tr, 'image': ImageAssets.medical},
+    {"id": 487, 'cat': 'mehan'.tr, 'image': ImageAssets.mehan},
+    {"id": 461, 'cat': 'realestate'.tr, 'image': ImageAssets.realestate},
+    {"id": 476, 'cat': 'services'.tr, 'image': ImageAssets.services},
+    {"id": 495, 'cat': 'stores'.tr, 'image': ImageAssets.stores},
+  ];
 
   @override
   void onInit() {
     getAdsLists();
-    pageController = PageController();
+    pageController = PageController(initialPage: 0);
     initCarosel();
     update();
     super.onInit();
@@ -84,14 +91,17 @@ class HomeControllerImp extends HomeController {
   ];
   PageController pageController = PageController();
 
-  @override
-  initCarosel() {
+  void initCarosel() {
     Timer.periodic(Duration(seconds: 3), (timer) {
+      if (!pageController.hasClients)
+        return; // التأكد من أن `pageController` متصل بـ `PageView`
+
       if (currentIndex < images.length - 1) {
         currentIndex++;
       } else {
         currentIndex = 0;
       }
+
       pageController.animateToPage(
         currentIndex,
         duration: Duration(milliseconds: 500),

@@ -1,15 +1,15 @@
+import 'package:ecommercecourse/core/services/services.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../core/class/statusrequest.dart';
 import '../core/functions/handingdatacontroller.dart';
 import '../core/functions/snack.dart';
 import '../core/class/request_data.dart';
-import '../core/services/services.dart';
 import '../linkapi.dart';
 
 abstract class ProductGridController extends GetxController {
-  getMe();
   getCategories();
+
   getSubCategories(index);
   getAds(categoryId, page);
   getAdsFromScroll(categoryId, page);
@@ -17,7 +17,6 @@ abstract class ProductGridController extends GetxController {
 
 class ProductGridControllerImp extends ProductGridController {
   MyServices myServices = Get.find();
-  late String? user_email;
   bool? isLogedIn;
   bool? haveSubCategories;
 
@@ -29,13 +28,17 @@ class ProductGridControllerImp extends ProductGridController {
       "children": [],
     },
   ];
+
   List subCategories = [];
+  // ignore: non_constant_identifier_names
   int selected_cat = 0;
+  // ignore: non_constant_identifier_names
   int selected_sub_cat = -1;
   List ads = [];
   late int adsCurrentPage = 1;
   late int adstotalPage = 1;
-  late int categoryId = 0;
+  int categoryId = 0;
+
   bool isLoading = false;
 
   int gridColumnNumber = 2;
@@ -53,28 +56,24 @@ class ProductGridControllerImp extends ProductGridController {
   }
 
   @override
-  getAds(categoryId, page) async {
+  getAds(catId, page) async {
     statusRequest = StatusRequest.loading;
     update();
     var response = await data.requestData(
-        "${AppLink.adsfiltered}?category_id=$categoryId&page=$page",
-        {},
-        '',
-        'GET');
+        "${AppLink.adsfiltered}?category_id=$catId&page=$page", {}, '', 'GET');
     statusRequest = handlingData(response);
     if (StatusRequest.success == statusRequest) {
       if (response['statusCode'] == 200) {
         print(response['body']['data']);
-        print("************************** $categoryId");
+        print("************************** $catId");
         ads.addAll(response['body']['data']);
         adsCurrentPage = response['body']['current_page'];
         adstotalPage = response['body']['total_pages'];
-        categoryId = categoryId;
-
-        if (ads.length == 0) {
-          statusRequest = StatusRequest.nodata;
-        } else {
+        categoryId = catId;
+        if (ads.length > 0) {
           statusRequest = StatusRequest.success;
+        } else {
+          statusRequest = StatusRequest.nodata;
         }
       } else {
         statusRequest = StatusRequest.failure;
@@ -106,12 +105,6 @@ class ProductGridControllerImp extends ProductGridController {
   }
 
   @override
-  getMe() {
-    user_email = myServices.sharedPreferences.getString("user_email");
-    isLogedIn = myServices.sharedPreferences.getBool("isLogedIn");
-  }
-
-  @override
   getCategories() async {
     statusRequest = StatusRequest.loading;
     update();
@@ -136,10 +129,5 @@ class ProductGridControllerImp extends ProductGridController {
       haveSubCategories = false;
     }
     update();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 }

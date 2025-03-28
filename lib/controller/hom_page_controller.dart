@@ -1,4 +1,6 @@
+import 'package:ecommercecourse/controller/product_grid_controller.dart';
 import 'package:ecommercecourse/core/services/services.dart';
+import 'package:ecommercecourse/view/screen/aboutus.dart';
 import 'package:ecommercecourse/view/screen/home.dart';
 import 'package:ecommercecourse/view/wedgets/product_list.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +18,7 @@ class HomPageControllerImp extends HomPageController {
   bool? isLogedIn;
 
   int currentpage = 0;
+  int catId = 0;
   late TextEditingController searchController;
 
   @override
@@ -34,15 +37,28 @@ class HomPageControllerImp extends HomPageController {
     "profile".tr,
     "about".tr
   ];
-  List<Widget> listPage = [
-    Home(),
-    ProductGridPage(),
-    ProductsManging(),
-    ProductsManging(),
-  ];
+  List<Widget> get listPage => [
+        Home(),
+        ProductGridPage(),
+        ProductsManging(),
+        AboutUs(),
+      ];
+
+  ProductGridControllerImp productGridControllerImp =
+      Get.put(ProductGridControllerImp());
   @override
-  changePage(int i) {
+  changePage(int i, [catId = 0]) {
     currentpage = i;
+    if (i == 1 && catId != 0) {
+      var _index = productGridControllerImp.categories
+          .indexWhere((cat) => cat['id'] == catId);
+      productGridControllerImp.selected_cat = _index;
+      productGridControllerImp.selected_sub_cat = -1;
+      productGridControllerImp.getSubCategories(_index);
+      productGridControllerImp.ads = [];
+      productGridControllerImp.getAds(catId ?? 0, 1);
+    }
+
     update();
   }
 }

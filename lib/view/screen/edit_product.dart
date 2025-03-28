@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import '../../../core/functions/valid_input.dart';
 import '../../controller/edit_product_controller.dart';
 import '../../core/class/statusrequest.dart';
+import '../../core/constant/imageassets.dart';
 
 class EditProduct extends StatelessWidget {
   const EditProduct({super.key});
@@ -35,7 +37,13 @@ class EditProduct extends StatelessWidget {
                               style: Theme.of(context).textTheme.headlineLarge,
                             ),
                           ),
-                          SizedBox(height: 20),
+                          controller.statusRequest == StatusRequest.loading
+                              ? Center(
+                                  child: Lottie.asset(ImageAssets.dowonloading,
+                                      height: 40),
+                                )
+                              : SizedBox(height: 20),
+
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 20),
                             child: Text(
@@ -402,12 +410,17 @@ class EditProduct extends StatelessWidget {
                           SizedBox(height: 20),
 
                           SizedBox(height: 20),
-                          ElevatedButton(
-                            onPressed: () {
-                              controller.editProduct();
-                            },
-                            child: Text("Save changing".tr),
-                          ),
+                          controller.statusRequest == StatusRequest.loading
+                              ? Center(
+                                  child: Lottie.asset(ImageAssets.dowonloading,
+                                      height: 60),
+                                )
+                              : ElevatedButton(
+                                  onPressed: () {
+                                    controller.editProduct();
+                                  },
+                                  child: Text("Save changing".tr),
+                                ),
 
                           SizedBox(height: 20),
                           SizedBox(
@@ -508,18 +521,6 @@ class EditProduct extends StatelessWidget {
                   ),
                 ),
               ),
-              if (controller.statusRequest == StatusRequest.loading)
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 600),
-                    child: SizedBox(
-                      height: 75,
-                      width: 75,
-                      child: CircularProgressIndicator(),
-                    ),
-                  ),
-                )
             ],
           )),
         ));

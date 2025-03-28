@@ -1,14 +1,8 @@
-import 'package:ecommercecourse/core/constant/imageassets.dart';
-import 'package:ecommercecourse/view/wedgets/product_list.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import '../../controller/product_grid_controller.dart';
 import '../../core/class/handlingdataview.dart';
-import '../../core/class/statusrequest.dart';
-import '../../core/constant/colors.dart';
 import '../wedgets/categories_list.dart';
-import '../wedgets/home_header.dart';
 import '../wedgets/product_grid.dart';
 
 class ProductGridPage extends StatelessWidget {

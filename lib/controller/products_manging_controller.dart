@@ -1,23 +1,23 @@
+import 'package:ecommercecourse/core/constant/approutes.dart';
 import 'package:ecommercecourse/core/services/services.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../core/class/request_data.dart';
 import '../core/class/statusrequest.dart';
-import '../core/constant/imageassets.dart';
 import '../core/functions/handingdatacontroller.dart';
+import '../core/functions/snack.dart';
 import '../linkapi.dart';
 
 abstract class ProductsMangingController extends GetxController {
   getAdsAndComments();
   getMoreAds();
   getMoreComments();
-  makeAdActive(adId);
-  deleteAd(adId);
-  editAd(adId);
-  deleteComment(commentId);
-  makeAdSold(ad);
-  makeAdExpired(ad);
+  updateAdStatus(adId, status);
+  deleteAd(adId, index);
+  editAd(adId, index);
+  deleteComment(commentId, index);
+  editComment(commentId, index);
 }
 
 class ProductsMangingControllerImp extends ProductsMangingController {
@@ -30,82 +30,15 @@ class ProductsMangingControllerImp extends ProductsMangingController {
   late StatusRequest statusRequest = StatusRequest.none;
   RequestData data = RequestData(Get.find());
   Map<String, dynamic> adscount = {};
-  List<dynamic> ads = [
-    //   {
-    //     "id": "1",
-    //     'title': "عنوان اعلان 1",
-    //     'image': 'url',
-    //     'status': "active",
-    //     'date': "منذ 10 أيام",
-    //   },
-    //   {
-    //     "id": "2",
-    //     'title': "عنوان اعلان 2",
-    //     'image': 'url',
-    //     'status': "sold",
-    //     'date': "منذ 10 أيام",
-    //   },
-    //   {
-    //     "id": "3",
-    //     'title': "عنوان اعلان 3",
-    //     'image': 'url',
-    //     'status': "expired",
-    //     'date': "منذ 10 أيام",
-    //   },
-    //   {
-    //     "id": "4",
-    //     'title': "عنوان اعلان 4",
-    //     'image': 'url',
-    //     'status': "active",
-    //     'date': "10 أيام",
-    //   },
-  ];
+  // GlobalKey<FormState> formStateSignup = GlobalKey<FormState>();
 
-  List<dynamic> comments = [
-    //   {
-    //     "id": "1",
-    //     'title': "نص تعليق 1",
-    //     'date': "منذ 10 أيام",
-    //     'product': "توصيل",
-    //   },
-    //   {
-    //     "id": "2",
-    //     'title': "نص تعليق 2",
-    //     'date': "منذ 10 أيام",
-    //     'product': "توصيل",
-    //   },
-    //   {
-    //     "id": "3",
-    //     'title': "نص تعليق 3",
-    //     'date': "منذ 10 أيام",
-    //     'product': "توصيل",
-    //   },
-    //   {
-    //     "id": "4",
-    //     'title': "نص تعليق 4",
-    //     'date': "10 أيام",
-    //     'product': "توصيل",
-    //   },
-  ];
+  List<dynamic> ads = [];
+
+  List<dynamic> comments = [];
   final List<Map<String, dynamic>> statics = [
-    {
-      'image': ImageAssets.carousel3,
-      'icon': Icons.done,
-      'number': 35,
-      'title': 'اعلاناتي النشطة'
-    },
-    {
-      'image': ImageAssets.carousel3,
-      'icon': Icons.shopping_cart,
-      'number': 20,
-      'title': 'اعلاناتي المباعة'
-    },
-    {
-      'image': ImageAssets.carousel3,
-      'icon': Icons.date_range,
-      'number': 5,
-      'title': 'اعلاناتي المنتهية'
-    },
+    {'icon': Icons.done, 'number': 35, 'title': 'active ads'.tr},
+    {'icon': Icons.shopping_cart, 'number': 20, 'title': 'sold ads'.tr},
+    {'icon': Icons.date_range, 'number': 5, 'title': 'expired ads'.tr},
   ];
 
   @override
@@ -124,15 +57,15 @@ class ProductsMangingControllerImp extends ProductsMangingController {
   }
 
   @override
-  deleteAd(adId) {
-    ads = [];
+  deleteAd(adId, index) {
+    ads.removeAt(index);
     update();
   }
 
   @override
-  deleteComment(commentId) {
-    // TODO: implement deleteComment
-    throw UnimplementedError();
+  deleteComment(commentId, index) {
+    comments.removeAt(index);
+    update();
   }
 
   @override
@@ -167,28 +100,33 @@ class ProductsMangingControllerImp extends ProductsMangingController {
   }
 
   @override
-  makeAdExpired(ad) {
-    // TODO: implement makeAdExpired
-    throw UnimplementedError();
+  editAd(adId, index) {
+    Get.toNamed(AppRoutes.editproduct, arguments: adId);
   }
 
   @override
-  makeAdSold(ad) {
-    // TODO: implement makeAdSold
-    throw UnimplementedError();
+  updateAdStatus(adId, status) async {
+    statusRequest = StatusRequest.loading;
+    update();
+    var response = await data.requestData(AppLink.updateadstatus,
+        {'post_id': adId, 'status': status}, '', 'POST');
+    statusRequest = handlingData(response);
+    if (StatusRequest.success == statusRequest) {
+      if (response['statusCode'] == 200) {
+        var oldStatus = ads[ads.indexWhere((ad) => ad['id'] == adId)]['status'];
+        adscount[oldStatus] = adscount[oldStatus] - 1;
+        adscount[status] = adscount[status] + 1;
+        ads[ads.indexWhere((ad) => ad['id'] == adId)]['status'] = status;
+
+        snack("Done".tr, response['body']['message'], Icons.check, 'success');
+      } else if (response['statusCode'] == 403) {
+        snack("Inputs error".tr, response['body']['message'], Icons.error,
+            'info');
+      }
+      update();
+    }
   }
 
   @override
-  editAd(adId) {
-    // TODO: implement editAd
-    throw UnimplementedError();
-  }
-
-  @override
-  makeAdActive(adId) {
-    // TODO: implement makeAdActive
-    throw UnimplementedError();
-  }
-
-  void editComment(comment) {}
+  void editComment(commentId, index) {}
 }

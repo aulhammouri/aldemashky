@@ -1,8 +1,6 @@
 //import 'package:ecommercecourse/view/wedgets/product/image_viewer.dart';
-import 'package:chewie/chewie.dart';
+import 'package:ecommercecourse/controller/hom_page_controller.dart';
 import 'package:ecommercecourse/core/constant/imageassets.dart';
-import 'package:ecommercecourse/view/screen/auth/login_screen.dart';
-import 'package:ecommercecourse/view/screen/test_product.dart';
 import 'package:ecommercecourse/view/wedgets/product/rating_tag.dart';
 import 'package:ecommercecourse/view/wedgets/product/review_tile.dart';
 import 'package:ecommercecourse/view/wedgets/product/view_vedio.dart';
@@ -21,9 +19,6 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../wedgets/custom_btn_widget.dart';
 import '../wedgets/product/image_viewer.dart';
 import '../wedgets/product/review_popup.dart';
-import 'auth/login_screan_small.dart';
-
-import 'package:video_player/video_player.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class ProductDetail extends StatelessWidget {
@@ -304,7 +299,7 @@ class ProductDetail extends StatelessWidget {
                                       fontSize: 14,
                                       fontWeight: FontWeight.w600,
                                     ),
-                                    "Status: " +
+                                    "Status: ".tr +
                                         controller.product['condition'],
                                   ),
                                 const SizedBox(height: 4),
@@ -391,7 +386,7 @@ class ProductDetail extends StatelessWidget {
                                         size: 14, color: Colors.black),
                                     const SizedBox(width: 4),
                                     Text(
-                                      "${controller.product['views_count'] ?? 0} ${"views".tr}",
+                                      "${controller.product['views_count'] == "" ? 0 : controller.product['views_count']} ${"views".tr}",
                                     ),
                                   ],
                                 ),

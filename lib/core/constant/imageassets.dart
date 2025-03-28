@@ -2,6 +2,8 @@ class ImageAssets {
   static const String rootImages = 'assets/images';
 
   static const String logo = '$rootImages/logo.png';
+  static const String aboutus = '$rootImages/aboutus.jpg';
+  static const String circlebg = '$rootImages/color-circle.png';
   static const String onBoardingImage0 =
       '$rootImages/onboarding/Illustration-0.png';
   static const String onBoardingImage1 =
@@ -10,6 +12,16 @@ class ImageAssets {
       '$rootImages/onboarding/Illustration-2.png';
   static const String onBoardingImage3 =
       '$rootImages/onboarding/Illustration-3.png';
+
+  static const String cars = '$rootImages/categories/cars.png';
+  static const String delevery = '$rootImages/categories/delevery.png';
+  static const String jobs = '$rootImages/categories/jobs.png';
+  static const String medical = '$rootImages/categories/medical.png';
+  static const String mehan = '$rootImages/categories/mehan.png';
+  static const String realestate = '$rootImages/categories/realestate.png';
+  static const String services = '$rootImages/categories/services.png';
+  static const String stores = '$rootImages/categories/stores.png';
+
   static const String carousel0 = '$rootImages/carousel/banner-5-1.jpg';
   static const String carousel1 = '$rootImages/carousel/1.jpg';
   static const String carousel2 = '$rootImages/carousel/2.jpg';
