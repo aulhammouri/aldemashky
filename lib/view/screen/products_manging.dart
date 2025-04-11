@@ -157,8 +157,8 @@ class ProductsManging extends StatelessWidget {
                                   shrinkWrap: true,
                                   physics: NeverScrollableScrollPhysics(),
                                   itemBuilder: (context, index) => ListTile(
-                                    leading: Image.asset(
-                                      ImageAssets.carousel0,
+                                    leading: Image.network(
+                                      controller.ads[index]['image'],
                                       width: 80,
                                     ),
                                     title: Text(controller.ads[index]['title']),
@@ -348,7 +348,7 @@ class ProductsManging extends StatelessWidget {
                                   shrinkWrap: true,
                                   physics: NeverScrollableScrollPhysics(),
                                   itemBuilder: (context, index) => ListTile(
-                                    leading: Text(index.toString()),
+                                    leading: Text((index + 1).toString()),
                                     title: Text(
                                         controller.comments[index]['title']),
                                     subtitle: Text("ads: ".tr +
@@ -358,7 +358,9 @@ class ProductsManging extends StatelessWidget {
                                         controller.comments[index]
                                             ['review_star'] +
                                         " stars".tr),
-                                    tileColor: Colors.grey.shade300,
+                                    tileColor: index.isEven
+                                        ? Colors.black12
+                                        : Colors.white70,
                                     trailing: PopupMenuButton(
                                         itemBuilder: (context) => [
                                               PopupMenuItem(
@@ -412,24 +414,36 @@ class ProductsManging extends StatelessWidget {
                               : Center(child: Text("No Comments".tr)),
                         ),
                         Container(
-                          margin: EdgeInsets.only(left: 52, top: 12, bottom: 6),
+                          //margin: EdgeInsets.only(left: 52, top: 12, bottom: 6),
                           child: ElevatedButton(
-                            onPressed: () {
-                              controller.getMoreAds();
-                            },
-                            style: ElevatedButton.styleFrom(
-                              foregroundColor: ColorApp.primary,
-                              elevation: 0,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8)),
-                            ),
-                            child: Text(
-                              'See More Comments'.tr,
-                              style: TextStyle(
-                                  color: ColorApp.headLine1Color,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                          ),
+                              onPressed: () {
+                                controller.getMoreComments();
+                              },
+                              style: ElevatedButton.styleFrom(
+                                foregroundColor: ColorApp.primary,
+                                elevation: 0,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8)),
+                              ),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    'See More Ads'.tr,
+                                    style: TextStyle(
+                                        color: ColorApp.headLine1Color,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                  Spacer(),
+                                  controller.statusRequest ==
+                                          StatusRequest.loading
+                                      ? Center(
+                                          child: Lottie.asset(
+                                              ImageAssets.dowonloading,
+                                              height: 40),
+                                        )
+                                      : Spacer(),
+                                ],
+                              )),
                         )
                       ],
                     ),
@@ -443,12 +457,24 @@ class ProductsManging extends StatelessWidget {
                       border: Border.all(color: Colors.grey, width: 2),
                       borderRadius: BorderRadius.circular(4),
                     ),
-                    child: Row(
-                      children: [
-                        Icon(Icons.lock),
-                        SizedBox(width: 10),
-                        Text('Update my password'.tr),
-                      ],
+                    child: InkWell(
+                      onTap: () {
+                        controller.updatePasswordPopup();
+                      },
+                      child: Row(
+                        children: [
+                          Icon(Icons.lock),
+                          SizedBox(width: 10),
+                          Text('Update my password'.tr),
+                          Spacer(),
+                          controller.statusRequest == StatusRequest.loading
+                              ? Center(
+                                  child: Lottie.asset(ImageAssets.dowonloading,
+                                      height: 40),
+                                )
+                              : Spacer(),
+                        ],
+                      ),
                     ),
                   ),
                   SizedBox(height: 10),
@@ -460,12 +486,17 @@ class ProductsManging extends StatelessWidget {
                       border: Border.all(color: Colors.grey, width: 2),
                       borderRadius: BorderRadius.circular(4),
                     ),
-                    child: Row(
-                      children: [
-                        Icon(Icons.logout_outlined),
-                        SizedBox(width: 10),
-                        Text('Log Out'.tr),
-                      ],
+                    child: InkWell(
+                      onTap: () {
+                        controller.logOut();
+                      },
+                      child: Row(
+                        children: [
+                          Icon(Icons.logout_outlined),
+                          SizedBox(width: 10),
+                          Text('Log Out'.tr),
+                        ],
+                      ),
                     ),
                   ),
                   SizedBox(height: 40),

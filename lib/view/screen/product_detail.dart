@@ -10,9 +10,11 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../controller/product_detail_controller.dart';
 import '../../core/class/handlingdataview.dart';
+import '../../core/class/statusrequest.dart';
 import '../../core/constant/colors.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -469,11 +471,25 @@ class ProductDetail extends StatelessWidget {
                                             borderRadius:
                                                 BorderRadius.circular(8)),
                                       ),
-                                      child: Text(
-                                        'See More Reviews'.tr,
-                                        style: TextStyle(
-                                            color: ColorApp.p_secondary,
-                                            fontWeight: FontWeight.w600),
+                                      child: Row(
+                                        children: [
+                                          //Icon(Icons.lock),
+                                          //SizedBox(width: 10),
+                                          Text(
+                                            'See More Reviews'.tr,
+                                            style: TextStyle(
+                                                color: ColorApp.p_secondary,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                          Spacer(),
+                                          controller.loadingMoreComments == true
+                                              ? Center(
+                                                  child: Lottie.asset(
+                                                      ImageAssets.dowonloading,
+                                                      height: 40),
+                                                )
+                                              : Spacer(),
+                                        ],
                                       ),
                                     ),
                                   )

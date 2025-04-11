@@ -87,12 +87,14 @@ class ProductDetailControllerImp extends ProductDetailController {
     super.dispose();
   }
 
+  bool loadingMoreComments = false;
   @override
   getMoreComments() async {
     if (commentsCount < commentsCurrentPage * 5) {
       snack("sorry".tr, "No more comments".tr, Icons.info, 'info');
       return;
     }
+    loadingMoreComments = true;
     commentsCurrentPage = commentsCurrentPage + 1;
     update();
     var response = await data.requestData(
@@ -103,7 +105,7 @@ class ProductDetailControllerImp extends ProductDetailController {
     if (StatusRequest.success == statusRequest) {
       if (response['statusCode'] == 200) {
         comments.addAll(response['body']['comments']);
-        print(comments);
+        loadingMoreComments = false;
         update();
       }
     }

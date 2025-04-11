@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../controller/product_grid_controller.dart';
+import '../../core/constant/colors.dart';
+import 'package:intl/intl.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class ProductCardRow extends StatelessWidget {
   const ProductCardRow({
@@ -21,7 +24,7 @@ class ProductCardRow extends StatelessWidget {
     return GetBuilder<ProductGridControllerImp>(
       builder: (controller) => Container(
         child: SizedBox(
-          height: 150,
+          //height: 150,
           child: GestureDetector(
             onTap: onPress,
             child: Row(
@@ -30,11 +33,10 @@ class ProductCardRow extends StatelessWidget {
                 Expanded(
                   flex: 2,
                   child: AspectRatio(
-                    aspectRatio: 1.02,
+                    aspectRatio: 1,
                     child: Container(
                       padding: const EdgeInsets.all(4),
                       decoration: BoxDecoration(
-                        color: const Color(0xFF979797).withOpacity(0.1),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: ClipRRect(
@@ -115,30 +117,40 @@ class ProductCardRow extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: 6),
-                      if ((ads['currency'] != null && ads['currency'] != "") &&
-                          (ads['price'] != null && ads['price'] != ""))
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "${ads['currency']} ${ads['price']}",
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xFFFF7643),
-                              ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            ((ads['currency'] != null &&
+                                        ads['currency'] != "") &&
+                                    (ads['price'] != null &&
+                                        ads['price'] != ""))
+                                ? "${ads['currency']} ${ads['price']}"
+                                : ads['price_type'] == 'on_call'
+                                    ? "On Call".tr
+                                    : ads['price_type'] == 'Negotiable'
+                                        ? "Negotiable".tr
+                                        : ads['price_type'] == 'Fixed'
+                                            ? "Fixed".tr
+                                            : ads['price_type'] == 'auction'
+                                                ? "Auction".tr
+                                                : "Free".tr,
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: ColorApp.btnBgColor,
                             ),
-                            Text(
-                              ads['published_date'] ?? "Unknown date",
-                              style: const TextStyle(
-                                  fontSize: 12, color: Colors.grey),
-                            ),
-                          ],
-                        )
-                      else
-                        Row(
-                          children: [Text("no price")],
-                        )
+                          ),
+                          Text(
+                            timeago.format(
+                                DateFormat("yyyy-MM-dd HH:mm:ss")
+                                    .parse(ads['published_date']),
+                                locale: 'ar'),
+                            style: const TextStyle(
+                                fontSize: 12, color: Colors.grey),
+                          ),
+                        ],
+                      )
                     ],
                   ),
                 ),

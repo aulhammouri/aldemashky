@@ -1,6 +1,7 @@
 import 'package:ecommercecourse/controller/product_grid_controller.dart';
 import 'package:ecommercecourse/core/services/services.dart';
 import 'package:ecommercecourse/view/screen/aboutus.dart';
+import 'package:ecommercecourse/view/screen/auth/login_screen.dart';
 import 'package:ecommercecourse/view/screen/home.dart';
 import 'package:ecommercecourse/view/wedgets/product_list.dart';
 import 'package:flutter/material.dart';
@@ -40,7 +41,7 @@ class HomPageControllerImp extends HomPageController {
   List<Widget> get listPage => [
         Home(),
         ProductGridPage(),
-        ProductsManging(),
+        isLogedIn == true ? ProductsManging() : LoginScreen(),
         AboutUs(),
       ];
 

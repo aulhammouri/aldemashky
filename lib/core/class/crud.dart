@@ -53,13 +53,13 @@ class Crud {
       String linkurl, String token) async {
     if (await checkInternet()) {
       try {
-        final timestamp = DateTime.now().millisecondsSinceEpoch;
-        var response = await http
-            .get(Uri.parse("$linkurl?timestamp=$timestamp"), headers: {
+        //final timestamp = DateTime.now().millisecondsSinceEpoch;
+        var response = await http.get(Uri.parse(linkurl), headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
-          'Cache-Control': 'no-cache', // تعديل خطأ إملائي من Cashe إلى Cache
-          'Pragma': 'no-cache'
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'Pragma': 'no-cache',
+          'Expires': '0',
         });
 
         print(

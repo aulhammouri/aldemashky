@@ -1,3 +1,4 @@
+import 'dart:ffi';
 import 'dart:io';
 
 import 'package:ecommercecourse/core/services/services.dart';
@@ -148,6 +149,7 @@ class AddProductControllerImp extends AddProductController {
   }
 
   List<dynamic> categories = [];
+  bool isCatService = false;
 
   Map<String, dynamic>? selectedMainCategory;
   Map<String, dynamic>? selectedSubCategory;
@@ -156,9 +158,18 @@ class AddProductControllerImp extends AddProductController {
   void updateSubCategories(Map<String, dynamic> category) {
     selectedMainCategory = category;
     selectedSubCategory = null;
-    update();
+
     print(selectedMainCategory);
     print(selectedSubCategory);
+    if (selectedMainCategory!['name'] == 'توصیل' ||
+        selectedMainCategory!['name'] == 'خدمات' ||
+        selectedMainCategory!['name'] == 'طبي' ||
+        selectedMainCategory!['name'] == 'مھن واعمال حرة') {
+      isCatService = true;
+    } else {
+      isCatService = false;
+    }
+    update();
   }
 
   final List<dynamic> countries = [];
@@ -304,7 +315,7 @@ class AddProductControllerImp extends AddProductController {
   getLists() async {
     statusRequest = StatusRequest.loading;
     update();
-    var response = await data.requestData(AppLink.catswithsubs, {}, '', 'GET');
+    var response = await data.requestData(AppLink.cats10ads, {}, '', 'GET');
     statusRequest = handlingData(response);
     if (StatusRequest.success == statusRequest) {
       if (response['statusCode'] == 200) {

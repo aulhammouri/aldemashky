@@ -27,7 +27,8 @@ class HomeList extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () {
-                    Get.toNamed(AppRoutes.productdetail, arguments: ads["id"]);
+                    Get.toNamed(AppRoutes.productdetail,
+                        arguments: adsList[index]["id"]);
                   },
                   child: Container(
                     height: 215,

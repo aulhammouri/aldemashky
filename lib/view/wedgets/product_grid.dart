@@ -30,19 +30,39 @@ class ProductGrid extends StatelessWidget {
       child: GridView.builder(
         padding: EdgeInsets.all(10),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2, // 1,
+          crossAxisCount: 1, // 2, // 1,
           crossAxisSpacing: 10,
           mainAxisSpacing: 10,
-          childAspectRatio: 0.6, //3,
+          childAspectRatio: 3.3, // 0.6, //3,
         ),
         itemCount: controller.ads.length,
         itemBuilder: (context, index) {
-          return ProductCardColumn(
-            ads: controller.ads[index],
-            onPress: () {
-              Get.toNamed(AppRoutes.productdetail,
-                  arguments: controller.ads[index]['ID']);
-            },
+          return Container(
+            padding: EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(8), // حواف دائرية
+              border: Border.all(
+                color: Colors.green, // لون الإطار
+                width: 1, // سمك الإطار
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black26, // ظل خفيف
+                  blurRadius: 1,
+                  spreadRadius: 1,
+                  offset: Offset(2, 2),
+                ),
+              ],
+            ),
+            //color: index.isOdd ? Colors.black12 : Colors.white12,
+            child: ProductCardRow(
+              ads: controller.ads[index],
+              onPress: () {
+                Get.toNamed(AppRoutes.productdetail,
+                    arguments: controller.ads[index]['ID']);
+              },
+            ),
           );
         },
       ),

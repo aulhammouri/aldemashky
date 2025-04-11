@@ -22,10 +22,7 @@ List<GetPage<dynamic>>? routes = [
   // ]),
   //GetPage(name: "/", page: () => TestView()),
 
-  GetPage(
-      name: AppRoutes.home,
-      page: () => LoginScreen(),
-      middlewares: [StagingMiddleware()]),
+  GetPage(name: AppRoutes.home, page: () => HomePage()),
   GetPage(name: AppRoutes.homepage, page: () => HomePage()),
   GetPage(name: AppRoutes.aboutus, page: () => AboutUs()),
 
@@ -38,5 +35,9 @@ List<GetPage<dynamic>>? routes = [
   GetPage(name: AppRoutes.productdetail, page: () => ProductDetail()),
   GetPage(name: AppRoutes.addproduct, page: () => AddProduct()),
   GetPage(name: AppRoutes.editproduct, page: () => EditProduct()),
-  GetPage(name: AppRoutes.managProducts, page: () => ProductsManging()),
+  GetPage(
+    name: AppRoutes.managProducts,
+    page: () => ProductsManging(),
+    //middlewares: [StagingMiddleware()]
+  ),
 ];

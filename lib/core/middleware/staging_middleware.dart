@@ -12,8 +12,8 @@ class StagingMiddleware extends GetMiddleware {
 
   @override
   RouteSettings? redirect(String? route) {
-    if (myServices.sharedPreferences.getBool("isLogedIn") == true) {
-      return const RouteSettings(name: AppRoutes.homepage);
+    if (myServices.sharedPreferences.getBool("isLogedIn") != true) {
+      return const RouteSettings(name: AppRoutes.login);
     }
     return null;
   }

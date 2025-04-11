@@ -135,66 +135,80 @@ class EditProduct extends StatelessWidget {
                             ),
                           ),
                           SizedBox(height: 40),
-                          DropdownButtonFormField<String>(
-                            decoration: InputDecoration(
-                              labelText: "chose condition".tr,
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10)),
-                            ),
-                            value: controller.condition,
-                            items: controller.conditionList.map((condition) {
-                              return DropdownMenuItem<String>(
-                                value: condition,
-                                child: Text(condition),
-                              );
-                            }).toList(),
-                            onChanged: (value) {
-                              controller.updateCondition(value!);
-                            },
-                            validator: (val) =>
-                                val == null ? "can't be Empty".tr : null,
-                          ),
-                          SizedBox(height: 10),
-                          DropdownButtonFormField<String>(
-                            decoration: InputDecoration(
-                              labelText: "chose warranty".tr,
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10)),
-                            ),
-                            value: controller.warranty,
-                            items: controller.warrantyList.map((warranty) {
-                              return DropdownMenuItem<String>(
-                                value: warranty,
-                                child: Text(warranty),
-                              );
-                            }).toList(),
-                            onChanged: (value) {
-                              controller.updateWarranty(value!);
-                            },
-                            validator: (val) =>
-                                val == null ? "can't be Empty".tr : null,
-                          ),
-                          SizedBox(height: 10),
-                          DropdownButtonFormField<String>(
-                            decoration: InputDecoration(
-                              labelText: "chose ad type".tr,
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10)),
-                            ),
-                            value: controller.type,
-                            items: controller.typeList.map((type) {
-                              return DropdownMenuItem<String>(
-                                value: type,
-                                child: Text(type),
-                              );
-                            }).toList(),
-                            onChanged: (value) {
-                              controller.updateType(value!);
-                            },
-                            validator: (val) =>
-                                val == null ? "can't be Empty".tr : null,
-                          ),
-                          SizedBox(height: 40),
+                          controller.isCatService == false
+                              ? Column(
+                                  children: [
+                                    DropdownButtonFormField<String>(
+                                      decoration: InputDecoration(
+                                        labelText: "chose condition".tr,
+                                        border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                      ),
+                                      value: controller.condition,
+                                      items: controller.conditionList
+                                          .map((condition) {
+                                        return DropdownMenuItem<String>(
+                                          value: condition,
+                                          child: Text(condition),
+                                        );
+                                      }).toList(),
+                                      onChanged: (value) {
+                                        controller.updateCondition(value!);
+                                      },
+                                      validator: (val) => val == null
+                                          ? "can't be Empty".tr
+                                          : null,
+                                    ),
+                                    SizedBox(height: 10),
+                                    DropdownButtonFormField<String>(
+                                      decoration: InputDecoration(
+                                        labelText: "chose warranty".tr,
+                                        border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                      ),
+                                      value: controller.warranty,
+                                      items: controller.warrantyList
+                                          .map((warranty) {
+                                        return DropdownMenuItem<String>(
+                                          value: warranty,
+                                          child: Text(warranty),
+                                        );
+                                      }).toList(),
+                                      onChanged: (value) {
+                                        controller.updateWarranty(value!);
+                                      },
+                                      validator: (val) => val == null
+                                          ? "can't be Empty".tr
+                                          : null,
+                                    ),
+                                    SizedBox(height: 10),
+                                    DropdownButtonFormField<String>(
+                                      decoration: InputDecoration(
+                                        labelText: "chose ad type".tr,
+                                        border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                      ),
+                                      value: controller.type,
+                                      items: controller.typeList.map((type) {
+                                        return DropdownMenuItem<String>(
+                                          value: type,
+                                          child: Text(type),
+                                        );
+                                      }).toList(),
+                                      onChanged: (value) {
+                                        controller.updateType(value!);
+                                      },
+                                      validator: (val) => val == null
+                                          ? "can't be Empty".tr
+                                          : null,
+                                    ),
+                                    SizedBox(height: 40),
+                                  ],
+                                )
+                              : SizedBox(height: 0),
                           DropdownButtonFormField<Map<String, String>>(
                             decoration: InputDecoration(
                               labelText: "chose pricing type".tr,

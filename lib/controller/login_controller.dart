@@ -51,7 +51,7 @@ class LoginControllerImp extends LoginController {
           myService.sharedPreferences
               .setString("user_id", response['body']['store_id'].toString());
           myService.sharedPreferences.setBool("isLogedIn", true);
-          Get.offNamed(AppRoutes.homepage);
+          Get.toNamed(AppRoutes.homepage);
         } else if (response['statusCode'] == 403) {
           snack("Inputs error".tr, response['body']['message'], Icons.error,
               'info');

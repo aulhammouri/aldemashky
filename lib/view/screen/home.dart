@@ -4,6 +4,7 @@ import 'package:ecommercecourse/view/wedgets/home_list.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../core/class/handlingdataview.dart';
 import '../wedgets/category_card.dart';
 import '../wedgets/home/home_list_loading.dart';
 import '../wedgets/home/image_carousel.dart';
@@ -46,10 +47,14 @@ class Home extends StatelessWidget {
               ),
               controller.statusRequest == StatusRequest.loading
                   ? HomeListLoading()
-                  : HomeList(
-                      adsList: homeController.newestAds,
-                      type: 'newest',
+                  : HandlingDataView(
+                      statusRequest: controller.statusRequest,
+                      widget: HomeList(
+                        adsList: homeController.newestAds,
+                        type: 'newest',
+                      ),
                     ),
+
               SizedBox(height: 10),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -58,9 +63,12 @@ class Home extends StatelessWidget {
               ),
               controller.statusRequest == StatusRequest.loading
                   ? HomeListLoading()
-                  : HomeList(
-                      adsList: homeController.mostViewedAds,
-                      type: 'mostviewed',
+                  : HandlingDataView(
+                      statusRequest: controller.statusRequest,
+                      widget: HomeList(
+                        adsList: homeController.mostViewedAds,
+                        type: 'mostviewed',
+                      ),
                     ),
               SizedBox(height: 10),
               Padding(
@@ -70,9 +78,12 @@ class Home extends StatelessWidget {
               ),
               controller.statusRequest == StatusRequest.loading
                   ? HomeListLoading()
-                  : HomeList(
-                      adsList: homeController.cheapestAds,
-                      type: 'cheapest',
+                  : HandlingDataView(
+                      statusRequest: controller.statusRequest,
+                      widget: HomeList(
+                        adsList: homeController.cheapestAds,
+                        type: 'cheapest',
+                      ),
                     ),
               SizedBox(height: 10),
               Padding(
@@ -82,9 +93,12 @@ class Home extends StatelessWidget {
               ),
               controller.statusRequest == StatusRequest.loading
                   ? HomeListLoading()
-                  : HomeList(
-                      adsList: homeController.featuredAds,
-                      type: 'featured',
+                  : HandlingDataView(
+                      statusRequest: controller.statusRequest,
+                      widget: HomeList(
+                        adsList: homeController.featuredAds,
+                        type: 'featured',
+                      ),
                     ),
             ],
           ),

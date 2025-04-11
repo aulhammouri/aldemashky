@@ -243,12 +243,21 @@ class EditProductControllerImp extends EditProductController {
   void updateSubCategories(Map<String, dynamic> category) {
     selectedMainCategory = category;
     selectedSubCategory = null;
+    if (selectedMainCategory!['name'] == 'توصیل' ||
+        selectedMainCategory!['name'] == 'خدمات' ||
+        selectedMainCategory!['name'] == 'طبي' ||
+        selectedMainCategory!['name'] == 'مھن واعمال حرة') {
+      isCatService = true;
+    } else {
+      isCatService = false;
+    }
     update();
     print(selectedMainCategory);
     print(selectedSubCategory);
   }
 
   final List<dynamic> countries = [];
+  bool isCatService = false;
 
   Map<String, dynamic>? selectedMainCountry;
   Map<String, dynamic>? selectedSubCountry;
@@ -265,6 +274,7 @@ class EditProductControllerImp extends EditProductController {
     selectedSubCountry = sCountry;
     print(selectedMainCountry);
     print(selectedSubCountry);
+
     update();
   }
 
@@ -407,6 +417,7 @@ class EditProductControllerImp extends EditProductController {
         for (var tag in product['tags']) {
           tags.add(tag);
         }
+
         attachments = response['body']['data']['attachments'];
         attachmentsCount = (response['body']['data']['attachments']).length;
         poster_contact.text = product['poster_contact'];
@@ -488,7 +499,14 @@ class EditProductControllerImp extends EditProductController {
         // //main country select
 
         // print("----------------------------" + cat.toString());
-
+        if (selectedMainCategory!['name'] == 'توصیل' ||
+            selectedMainCategory!['name'] == 'خدمات' ||
+            selectedMainCategory!['name'] == 'طبي' ||
+            selectedMainCategory!['name'] == 'مھن واعمال حرة') {
+          isCatService = true;
+        } else {
+          isCatService = false;
+        }
         update();
       } else {
         statusRequest = StatusRequest.failure;
@@ -500,7 +518,7 @@ class EditProductControllerImp extends EditProductController {
   getLists() async {
     statusRequest = StatusRequest.loading;
     update();
-    var response = await data.requestData(AppLink.catswithsubs, {}, '', 'GET');
+    var response = await data.requestData(AppLink.cats10ads, {}, '', 'GET');
     statusRequest = handlingData(response);
     if (StatusRequest.success == statusRequest) {
       if (response['statusCode'] == 200) {
